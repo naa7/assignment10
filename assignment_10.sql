@@ -8,7 +8,8 @@
 		employee_id serial primary key,
 		first_name varchar(50),
 		last_name varchar(50),
-		email varchar(100));
+		email varchar(100),
+		foreign key (department_id) references departments(department_id));
 
 ## creating departments table:	
 	create table departments (
@@ -25,7 +26,7 @@
 		foreign key (employee_id) references employees(employee_id));
 
 ## creating positions table: 
-	create positions (
+	create table positions (
 		position_id serial primary key,
 		employee_id int,
 		title varchar(50),
