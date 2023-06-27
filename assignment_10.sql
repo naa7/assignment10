@@ -1,6 +1,7 @@
 # Creating the database
 	create database employees;
 	
+	
 # Creating tables:
 
 ## creating employees table:	
@@ -9,6 +10,7 @@
 		first_name varchar(50),
 		last_name varchar(50),
 		email varchar(100),
+		department_id int,
 		foreign key (department_id) references departments(department_id));
 
 ## creating departments table:	
@@ -32,15 +34,16 @@
 		title varchar(50),
 		start_date date,
 		foreign key (employee_id) references employees(employee_id));
+	
 		
 # Inserting values into tables:
 
 ## Inserting values into employees table:
-	insert into employees (first_name, last_name, email) VALUES
-		  ('John', 'Doe', 'johndoe@example.com'),
-		  ('Jane', 'Smith', 'janesmith@example.com'),
-		  ('Michael', 'Johnson', 'michaeljohnson@example.com'),
-		  ('Emily', 'Davis', 'emilydavis@example.com');
+	insert into employees (first_name, last_name, email, department_id) VALUES
+		  ('John', 'Doe', 'johndoe@example.com', 1),
+		  ('Jane', 'Smith', 'janesmith@example.com', 4),
+		  ('Michael', 'Johnson', 'michaeljohnson@example.com', 2),
+		  ('Emily', 'Davis', 'emilydavis@example.com', 3);
 		  
 ## Inserting values into departments table:
 	insert into departments (department_name, location) VALUES
@@ -62,3 +65,24 @@
 		  (2, 'HR Manager', '2021-02-15'),
 		  (3, 'Marketing Analyst', '2021-03-10'),
 		  (4, 'Financial Analyst', '2021-04-20');
+
+
+# join queries:
+
+## Inner join between 'employees' and 'departments' tables:
+	SELECT e.employee_id, e.first_name, e.last_name, d.department_name
+	FROM employees e
+	INNER JOIN departments d ON e.department_id = d.department_id;
+	
+## Inner join between 'employees', 'salaries', and 'positions' tables:
+	SELECT e.employee_id, e.first_name, e.last_name, s.salary_amount, p.title
+	FROM employees e
+	INNER JOIN salaries s ON e.employee_id = s.employee_id
+	INNER JOIN positions p ON e.employee_id = p.employee_id;
+	
+## Inner join between all four tables, 'employees', 'departments', 'salaries', and 'positions':
+	SELECT e.employee_id, e.first_name, e.last_name, d.department_name, s.salary_amount, p.title
+	FROM employees e
+	INNER JOIN departments d ON e.department_id = d.department_id
+	INNER JOIN salaries s ON e.employee_id = s.employee_id
+	INNER JOIN positions p ON e.employee_id = p.employee_id;

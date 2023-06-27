@@ -15,10 +15,10 @@ app.use(express.json());
 
 app.post('/data', async (req, res) => {
   try {
-    const {first_name, last_name, email} = req.body;
+    const {first_name, last_name, email, department_id} = req.body;
     console.log('Request Body:', req.body);
-    const query = 'INSERT INTO employees (first_name, last_name, email) VALUES ($1, $2, $3) RETURNING *';
-    const result = await pool.query(query, [first_name, last_name, email]);
+    const query = 'INSERT INTO employees (first_name, last_name, email, department_id) VALUES ($1, $2, $3, $4) RETURNING *';
+    const result = await pool.query(query, [first_name, last_name, email, department_id]);
     console.log(result);
 
     res.status(200).json({ message: 'Data inserted successfully', data: {employees: result.rows[0]} });
